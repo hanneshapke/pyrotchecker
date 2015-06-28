@@ -28,13 +28,13 @@
               <input type="text" class="form-control" id="url" ng-model="rotChecker.urlText" placeholder="Enter a valid url here">
               <input type="text" class="form-control" id="keyword" ng-model="rotChecker.keywordText" placeholder="Enter a keyword in plain text here">
               <select class="form-control" id="shift" ng-model="rotChecker.rotShiftInt">
-                <option>- Choose your ROT shift here -</option>
+                <option selected>- Choose your ROT shift here -</option>
                 <option>5</option>
                 <option>13</option>
                 <option>27</option>
                 <option>28</option>
               </select>
-              <button type="submit" class="btn btn-primary">Check Website</button>
+              <button type="submit" class="btn btn-primary" ng-disabled="!(rotChecker.urlText || rotchecker.keywordText)">Check Website</button>
             </div>
           </form>
         </div>
