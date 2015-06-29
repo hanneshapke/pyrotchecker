@@ -26,7 +26,7 @@
           <form name="rotCheckerForm" class="form-inline" ng-submit="rotChecker.checkWebsite()">
             <div class="form-group">
               <input type="text" class="form-control" id="url" ng-model="rotChecker.urlText" placeholder="Enter a valid url here" required>
-              <input type="text" class="form-control" id="keyword" ng-model="rotChecker.keywordText" placeholder="Enter a keyword in plain text here" required>
+              <input type="text" class="form-control" id="keyword" ng-model="rotChecker.keywordText" placeholder="Enter keyword in plain text here, separate by comma" required>
               <input type="text" class="form-control" id="tag" ng-model="rotChecker.tagText" placeholder="Search a tag, default: body">
               <select class="form-control" id="shift" ng-model="rotChecker.rotShiftInt" required>
                 <option value="" selected>- ROT shift -</option>
