@@ -37,6 +37,7 @@ python app/rotchecker.py --url https://en.wikipedia.org/wiki/ROT13 --str="To get
 
 
 ### Suggestions for further improvements
+* Add more unit and functional tests
 * Allow functionality for extended ROT cyphers, e.g. ROT-47 which includes special characters
 * API submissions via POST and a json construct
 * Cache already checked sites via Redis
