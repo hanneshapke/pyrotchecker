@@ -98,12 +98,18 @@ class ROTCypher:
             self.status = 'alert alert-success'
 
     def check_website_for_rot(self, url, strings, tag='body'):
+        print ">>>>>>>", strings
         ''' wrapper method for the rotchecker functionality '''
         # get url response
         if not validate_url(url):
             self.message = ("Website %s doesn\'t exist" % url)
             return
+        # validate the html tag
         tag = validate_tag(tag)
+        # validate the search query string
+        if not validate_query_strings(strings):
+            self.message = "Error: No keyword given"
+            return
         try:
             response = urllib2.urlopen(url)
         except URLError, e:
@@ -130,7 +136,7 @@ class ROTCypher:
 
 def validate_tag(tag):
     ''' Checks if tag submission is empty '''
-    if tag == 'undefined':
+    if tag == 'undefined' or tag is None:
         tag = 'body'
     return tag
 
@@ -138,6 +144,8 @@ def validate_tag(tag):
 def validate_url(url):
     ''' very simple url validator,
     cases like ips, localhost, etc. omitted '''
+    if url is None:
+        return False
     url_regex = re.compile(r'^https?://')
     if url_regex.search(url):
             return True
@@ -153,6 +161,12 @@ def validate_shift(shift):
     if shift < 1 and shift > 25:
         raise ValueError('The ROT shift needs to be between 1 and 25')
     return shift
+
+
+def validate_query_strings(string):
+    if string is None:
+        return False
+    return True
 
 
 def get_query_strings(strings):
