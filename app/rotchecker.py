@@ -66,7 +66,6 @@ class ROTCypher:
         result = ""
         for char in text:
             result += self.chrtrot(char)
-        print result
         return result
 
     def convert_to_string(self, rot_text):
@@ -98,7 +97,6 @@ class ROTCypher:
             self.status = 'alert alert-success'
 
     def check_website_for_rot(self, url, strings, tag='body'):
-        print ">>>>>>>", strings
         ''' wrapper method for the rotchecker functionality '''
         # get url response
         if not validate_url(url):
