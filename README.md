@@ -28,12 +28,12 @@ python app/rotchecker.py --url https://en.wikipedia.org/wiki/ROT13 --str="To get
 ```
 
 ### How is the code checking for ROT terms?
-* all parameters (e.g. url, search keywords, html tags) are validated 
+* All parameters (e.g. url, search keywords, html tags) are validated 
 * URL will be retrieved
-* if status is 200, the preferred node will be extracted from the downloaded data
-* before search inf the remaining data for the keywords, the data will be stripped from remaining html tag to prevent that messages are hidden with tags in between (e.g. Gb trg gb gur <b>bgu</b>re fvqr)
-* the keywords are converted into the rot-n space
-* remaining data is then searched for the converted keywords
+* If status is 200, the preferred node will be extracted from the downloaded data
+* Before search inf the remaining data for the keywords, the data will be stripped from remaining html tag to prevent that messages are hidden with tags in between (e.g. Gb trg gb gur <b>bgu</b>re fvqr)
+* The keywords are converted into the rot-n space
+* The remaining data is then searched for the converted keywords
 
 
 ### Suggestions for further improvements
