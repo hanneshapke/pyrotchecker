@@ -23,20 +23,28 @@
       <div ng-controller="ROTCheckerController as rotChecker">
         <div class="row">
           <p class="lead">Check websites for hidden messages</p>
-          <form class="form-inline" ng-submit="rotChecker.checkWebsite()">
+          <form name="rotCheckerForm" class="form-inline" ng-submit="rotChecker.checkWebsite()">
             <div class="form-group">
-              <input type="text" class="form-control" id="url" ng-model="rotChecker.urlText" placeholder="Enter a valid url here">
-              <input type="text" class="form-control" id="keyword" ng-model="rotChecker.keywordText" placeholder="Enter a keyword in plain text here">
-              <select class="form-control" id="shift" ng-model="rotChecker.rotShiftInt">
-                <option selected>- Choose your ROT shift here -</option>
-                <option>5</option>
-                <option>13</option>
-                <option>27</option>
-                <option>28</option>
+              <input type="text" class="form-control" id="url" ng-model="rotChecker.urlText" placeholder="Enter a valid url here" required>
+              <input type="text" class="form-control" id="keyword" ng-model="rotChecker.keywordText" placeholder="Enter a keyword in plain text here" required>
+              <input type="text" class="form-control" id="tag" ng-model="rotChecker.tagText" placeholder="Search a tag, default: body">
+              <select class="form-control" id="shift" ng-model="rotChecker.rotShiftInt" required>
+                <option value="" selected>- ROT shift -</option>
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="13">13</option>
+                <option value="21">21</option>
               </select>
-              <button type="submit" class="btn btn-primary" ng-disabled="!(rotChecker.urlText || rotchecker.keywordText)">Check Website</button>
+              <button type="submit" class="btn btn-primary" ng-disabled="rotCheckerForm.$invalid">Check Website</button>
             </div>
           </form>
+        </div>
+        <div class="row well">
+          <strong>Example</strong></br>
+          https://en.wikipedia.org/wiki/ROT13
+          <a href="" ng-click="rotChecker.urlText='https://en.wikipedia.org/wiki/ROT13'"> Try it! </a></br>
+          search for "To get to the other side!" as "Gb trg gb gur bgure fvqr!" in ROT-13
+          <a href="" ng-click="rotChecker.keywordText='To get to the other side!'"> Try it! </a>
         </div>
         <div class="row">
           <div ng-show="rotChecker.status" ng-class="rotChecker.status" role="alert">{{ rotChecker.status_msg }} </div>
