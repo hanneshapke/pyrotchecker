@@ -3,6 +3,14 @@ app = Flask(__name__)
 
 from rotchecker import ROTCypher
 
+##################################################################
+# Routes:
+# / - index page with static searcgh site
+# /api - api interface with rot-search functionality
+# /api/<int:n shift> - api interface with rot-search
+#                      functionality for a give shift of n letters
+##################################################################
+
 
 @app.route('/')
 def index():
@@ -15,7 +23,7 @@ def rot_check(rot_shift=13):
     cypher = ROTCypher(rot_shift)
     cypher.check_website_for_rot(
         request.args.get('url'),
-        [request.args.get('q'), ],
+        request.args.get('q'),
         request.args.get('t'),)
     response = jsonify(
         message=cypher.message,
