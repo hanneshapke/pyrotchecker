@@ -10,19 +10,8 @@ class ROTCypher:
         ''' Sets the initial rot shift for th cypher '''
         # validate rot n shift
         self.rot_shift = validate_shift(rot_shift)
-        # self.alpha, self.rot = self.get_rot_sets(rot_shift)
         self.message = None
         self.status = 'alert alert-danger'
-
-    # def get_rot_sets(self, num_char_diff):
-    #     ''' Create char and rot strings for the conversion, default: 13 '''
-    #     uppercase_set = ''.join(chr(ord('A') + i) for i in xrange(26))
-    #     lowercase_set = ''.join(chr(ord('a') + i) for i in xrange(26))
-    #     uppercase_rot = ''.join(
-    #         [uppercase_set[num_char_diff:], uppercase_set[:num_char_diff]])
-    #     lowercase_rot = ''.join(
-    #         [lowercase_set[num_char_diff:], lowercase_set[:num_char_diff]])
-    #     return (uppercase_set + lowercase_set, uppercase_rot + lowercase_rot)
 
     @property
     def alpha(self):

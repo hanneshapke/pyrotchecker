@@ -6,12 +6,10 @@ from app import app
 class TestAPI(unittest.TestCase):
 
     def setUp(self):
-        # app.config['TESTING'] = True
         self.app = app.test_client()
         self.app.testing = True
 
     def test_cypher_request(self):
-        # client = self.app.test_client()
         url = \
             '/api/?url=https://en.wikipedia.org/' + \
             'wiki/ROT13&q=To%20get%20to%20the%20other%20side'
