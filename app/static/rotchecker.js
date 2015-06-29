@@ -11,7 +11,6 @@ angular.module('rotApp', [])
   })
 
   .controller('ROTCheckerController', function(APIService) {
-
     var rotChecker = this;
     rotChecker.status_msg = '';
     rotChecker.status = '';
@@ -29,5 +28,4 @@ angular.module('rotApp', [])
         console.log(data);
       });
     };
-
   });
