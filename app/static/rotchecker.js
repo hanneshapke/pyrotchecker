@@ -1,19 +1,33 @@
 angular.module('rotApp', [])
 
-  .controller('ROTCheckerController', function() {
-    
+  .factory('APIService', function( $http ) {
+    return {
+      checkWebsite: function(shift, url, keywords, tag) {
+        return $http.get('/api/' + shift + '?url=' + url + '&q=' + keywords + '&t=' + tag, {cache: false}).then(function(result) {
+          return result.data;
+        });
+      }
+    }
+  })
+
+  .controller('ROTCheckerController', function(APIService) {
+
     var rotChecker = this;
-    rotChecker.url = '';
-    rotChecker.rotShift = 13;
-    rotChecker.keyword = '';
+    rotChecker.status_msg = '';
     rotChecker.status = '';
 
     rotChecker.checkWebsite = function() {
-      rotChecker.url = rotChecker.urlText;
-      rotChecker.rotShift = rotChecker.rotShiftInt;
-      rotChecker.keyword = rotChecker.keywordText;
-      rotChecker.status = 'alert alert-danger';
-      rotChecker.status_msg = '[Invalid url] Found keyword %%%'
+      // rotChecker.rotShift = rotChecker.rotShiftInt;
+      APIService.checkWebsite(
+          rotChecker.rotShiftInt,
+          rotChecker.urlText,
+          rotChecker.keywordText,
+          rotChecker.tagText
+        ).then(function(data) {
+        rotChecker.status_msg = data['message'];
+        rotChecker.status = data['status'];
+        console.log(data);
+      });
     };
 
   });
