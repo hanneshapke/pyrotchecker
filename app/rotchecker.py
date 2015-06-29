@@ -90,12 +90,12 @@ class ROTCypher:
                     "website %s within the %s tag"
                     % (string, url, tag))
                 self.status = 'alert alert-warning'
-            else:
-                self.message = (
-                    "Good news: No keywords found on the "
-                    "website %s within the %s tag"
-                    % (url, tag))
-                self.status = 'alert alert-success'
+                return
+            self.message = (
+                "Good news: No keywords found on the "
+                "website %s within the %s tag"
+                % (url, tag))
+            self.status = 'alert alert-success'
 
     def check_website_for_rot(self, url, strings, tag='body'):
         ''' wrapper method for the rotchecker functionality '''
