@@ -6,15 +6,7 @@ https://pyrotchecker.herokuapp.com/
 
 
 ### Functionality
-The PYthonROTChecker allows to search entire websites or given nodes of sites to search for keywords which can be encrypted via [rot](https://en.wikipedia.org/wiki/ROT13). This tools provides a simple API endpoint, a simple front-end site, and a Python script.
-
-This following functionality is implemented:
-```
--u --url > request url of the website (required)
--s --str > query string/keywords, can be comma separated (required)
--t --tag > node to be checked (default: body)
--n --num > specify a specific rot shift (default: 13)
-```
+The PYthonROTChecker allows searching entire websites or given nodes of sites for keywords which are encrypted by the [rotate by n places](https://en.wikipedia.org/wiki/ROT13) cypher. This tools provides a simple API endpoint (based on Flask)), a simple front-end site (based on AngularJS), and a Python script.
 
 ### How to use the PYthonROTChecker?
 * Use the **website** [https://pyrotchecker.herokuapp.com/](https://pyrotchecker.herokuapp.com/)
@@ -27,7 +19,15 @@ curl --request GET "https://pyrotchecker.herokuapp.com/api/?url=https://en.wikip
 python app/rotchecker.py --url https://en.wikipedia.org/wiki/ROT13 --str="To get to the other side"
 ```
 
-### How is the code checking for ROT terms?
+The following functionality is implemented and usable via the Python script:
+```
+-u --url > request url of the website (required)
+-s --str > query string/keywords, can be comma separated (required)
+-t --tag > node to be checked (default: body)
+-n --num > specify a specific rot shift (default: 13)
+```
+
+### How is the code checking for ROT-n terms?
 * All parameters (e.g. url, search keywords, html tags) are validated 
 * URL will be retrieved
 * If status is 200, the preferred node will be extracted from the downloaded data
