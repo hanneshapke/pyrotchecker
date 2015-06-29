@@ -1,7 +1,11 @@
-from flask import Flask, request, render_template, jsonify
+import os
+from flask import (
+    Flask, request, render_template, jsonify)
+from werkzeug.contrib.fixers import ProxyFix
+from rotchecker import ROTCypher
+
 app = Flask(__name__)
 
-from rotchecker import ROTCypher
 
 ##################################################################
 # Routes:
@@ -30,5 +34,8 @@ def rot_check(rot_shift=13):
         status=cypher.status)
     return response
 
+app.wsgi_app = ProxyFix(app.wsgi_app)
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
