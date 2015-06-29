@@ -4,11 +4,12 @@ from urllib2 import URLError
 
 
 class ROTCypher:
-    ''' ... '''
+    ''' Class with cypher functionality to convert to and from rot '''
 
     def __init__(self, rot_shift=13):
         ''' Sets the initial rot shift for th cypher '''
-        self.rot_shift = rot_shift
+        # validate rot n shift
+        self.rot_shift = validate_shift(rot_shift)
         # self.alpha, self.rot = self.get_rot_sets(rot_shift)
         self.message = None
         self.status = 'alert alert-danger'
@@ -65,6 +66,7 @@ class ROTCypher:
         result = ""
         for char in text:
             result += self.chrtrot(char)
+        print result
         return result
 
     def convert_to_string(self, rot_text):
@@ -77,7 +79,10 @@ class ROTCypher:
     ########
 
     def check_for_words(self, data, url, strings, tag):
-        for string in strings:
+        '''
+        checks for given keywords (converted to rot-n) in a given website
+        '''
+        for string in get_query_strings(strings):
             # added ignore condition for false bytes when site is loaded
             if self.convert_to_rot(string.decode('utf8')) in data:
                 self.message = (
@@ -93,6 +98,7 @@ class ROTCypher:
                 self.status = 'alert alert-success'
 
     def check_website_for_rot(self, url, strings, tag='body'):
+        ''' wrapper method for the rotchecker functionality '''
         # get url response
         if not validate_url(url):
             self.message = ("Website %s doesn\'t exist" % url)
@@ -138,6 +144,24 @@ def validate_url(url):
     return False
 
 
+def validate_shift(shift):
+    ''' validates the rot shift '''
+    try:
+        shift = int(shift)
+    except ValueError:
+        raise ValueError('The shift needs to be of type integer')
+    if shift < 1 and shift > 25:
+        raise ValueError('The ROT shift needs to be between 1 and 25')
+    return shift
+
+
+def get_query_strings(strings):
+    ''' split query into multiple search items '''
+    if strings.find(',') != -1:
+        return strings.split(',')
+    return [strings]
+
+
 def get_tag_content(data, tag='body'):
     ''' extracts the data between tags, default is the body tag '''
     try:
@@ -147,6 +171,9 @@ def get_tag_content(data, tag='body'):
 
 
 def strip_tags(data):
+    ''' removes html tags from searchable content data. This is needed
+    to avoid that messages can't be detected due to html formatting e.g.
+    by placing <b> within the message '''
     return re.compile(r'<.*?>').sub('', data)
 
 ##################
@@ -154,11 +181,13 @@ def strip_tags(data):
 ##################
 
 if __name__ == "__main__":
-    # execute only if run as a script via `python app/rotchecker.py
-    #      --url='https://en.wikipedia.org/wiki/ROT13'
-    #      --str='Jul qvq gur puvpxra pebff gur ebnq?'
-    #      --num=13`
-    #      --tag=table
+    '''
+    execute only if run as a script via `python app/rotchecker.py
+         --url='https://en.wikipedia.org/wiki/ROT13'
+         --str='Jul qvq gur puvpxra pebff gur ebnq?'
+         --num=13`
+         --tag=table
+    '''
     import argparse
     parser = argparse.ArgumentParser(
         description='PyROTChecker checks websites for rot messages')
@@ -176,14 +205,10 @@ if __name__ == "__main__":
         default=13)
 
     args = parser.parse_args()
-    cypher = ROTCypher(int(args.num))
+    cypher = ROTCypher(args.num)
 
-    # validate url
-    if validate_url(args.url):
-        cypher.check_website_for_rot(
-            args.url,
-            [urllib2.unquote(args.str)],
-            args.tag)
-        print (cypher.message)
-    else:
-        print ("Given url %s is not valid" % args.url)
+    cypher.check_website_for_rot(
+        args.url,
+        urllib2.unquote(args.str),
+        args.tag)
+    print (cypher.message)
